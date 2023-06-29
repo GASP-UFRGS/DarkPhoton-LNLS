@@ -31,6 +31,6 @@
 *.out
 *.app
 
-#Buld folder
+#Build folder
 build/
 simulation/build/
