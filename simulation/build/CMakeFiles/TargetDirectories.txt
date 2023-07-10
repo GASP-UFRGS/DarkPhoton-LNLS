@@ -1,4 +1,0 @@
-/home/fernando/lnls/build/CMakeFiles/main.dir
-/home/fernando/lnls/build/CMakeFiles/Simulation.dir
-/home/fernando/lnls/build/CMakeFiles/edit_cache.dir
-/home/fernando/lnls/build/CMakeFiles/rebuild_cache.dir

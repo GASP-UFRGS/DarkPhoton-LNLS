@@ -25,6 +25,8 @@ public:
 private:
 	G4LogicalVolume *logicDetector;
 	virtual void ConstructSDandField();
+
+	//Here is where i should describe the magnetic field later
 };
 
 #endif
