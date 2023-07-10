@@ -34,3 +34,7 @@
 #Build folder
 build/
 simulation/build/
+.idea/
+simulation/.idea/
+cmake-build-debug/
+simulation/cmake-build-debug/
