@@ -12,6 +12,9 @@
 #include "G4HadronElasticPhysics.hh"
 #include "G4HadronElasticPhysicsHP.hh"
 
+#include "G4HadronPhysicsQGSP_BERT.hh"
+#include "G4HadronPhysicsQGSP_BIC.hh"
+
 class MyPhysicsList : public G4VModularPhysicsList
 {
 public:
@@ -20,4 +23,3 @@ public:
 };
 
 #endif
-

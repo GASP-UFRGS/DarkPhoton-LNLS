@@ -11,6 +11,9 @@ MyPhysicsList::MyPhysicsList()
 	RegisterPhysics (new G4StoppingPhysics());
 	RegisterPhysics (new G4HadronElasticPhysics());
 	RegisterPhysics (new G4HadronElasticPhysicsHP());
+
+	RegisterPhysics (new G4HadronPhysicsQGSP_BERT());
+	RegisterPhysics (new G4HadronPhysicsQGSP_BIC());
 }
 
 MyPhysicsList::~MyPhysicsList()

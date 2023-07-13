@@ -39,15 +39,6 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 	G4VPhysicalVolume *physVacuumLower = new G4PVPlacement (0, G4ThreeVector(0., -2*m, 5*m), logicVacuumLower, "physVacuumLower", logicWorld, false, 0, true); 
 
-	/*
-
-	G4Box *solidVacuumLower2 = new G4Box("solidVacuumLower2", 2*m, 1*m, 2*m);
-
-	G4LogicalVolume *logicVacuumLower2 = new G4LogicalVolume(solidVacuumLower2, vacuum, "logicalVacuumLower2");
-
-	G4VPhysicalVolume *physVacuumLower2 = new G4PVPlacement (0, G4ThreeVector(0., -3*m, 0.), logicVacuumLower2, "physVacuumLower2", logicWorld, false, 0, true); */
-
-
 	// Diamond target:
 
 	G4Material *diamond = new G4Material("diamond", 3.515*g/cm3, 1);
@@ -58,24 +49,6 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 	G4LogicalVolume *logicalDiamondTarget = new G4LogicalVolume(solidDiamondTarget, diamond, "logicalDiamondTarget");
 
 	G4VPhysicalVolume *physDiamond = new G4PVPlacement(0, G4ThreeVector(0., 0., -0.0201*m), logicalDiamondTarget, "physDiamond", logicWorld, false, 0, true);
-
-	/* Assembly Volumes:
-
-	G4AssemblyVolume* assemblyDetector = new G4AssemblyVolume();
-
-	G4RotationMatrix Ra;
-	G4ThreeVector Ta;
-	G4Transform3D Tr;
-
-	G4RotationMatrix Rm;
-
-	Ta.setX(2*m); Ta.setY(0.); Ta.setZ(0.);
-	Tr = G4Transform3D(Ra, Ta);
-	assemblyDetector->AddPlacedVolume(logicVacuum, Tr);
-
-	assemblyDetector->MakeImprint(logicVacuum, Tr);
-
-	*/
 
 	// Detector:
 

@@ -12,10 +12,15 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 
 	track->SetTrackStatus(fStopAndKill);
 
-	G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
-	G4StepPoint *postStepPoint = aStep->GetPostStepPoint();
+	if (track->GetDefinition() == G4Gamma::Definition()) {
 
-	G4ThreeVector posParticle = preStepPoint->GetPosition();
+		G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
+		G4StepPoint *postStepPoint = aStep->GetPostStepPoint();
 
-	G4cout << "Particle position: " << posParticle << G4endl;
+        	G4double energy = preStepPoint->GetTotalEnergy();
+		G4ThreeVector posParticle = preStepPoint->GetPosition();
+
+		G4cout << "Particle position: " << posParticle << G4endl;
+		G4cout << "Particle energy is: " << energy << G4endl;
+	}	
 }
