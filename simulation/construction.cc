@@ -44,7 +44,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 	G4Material *diamond = new G4Material("diamond", 3.515*g/cm3, 1);
 	diamond->AddElement(nist->FindOrBuildElement("C"), 1);
 
-	G4Box *solidDiamondTarget = new G4Box("solidDiamondTarget", 0.5*m, 0.5*m, 0.0001*m); //100 micrometers thick
+	G4Box *solidDiamondTarget = new G4Box("solidDiamondTarget", 0.5*m, 0.5*m, 0.0001*m);
 
 	G4LogicalVolume *logicalDiamondTarget = new G4LogicalVolume(solidDiamondTarget, diamond, "logicalDiamondTarget");
 
@@ -71,3 +71,4 @@ void MyDetectorConstruction::ConstructSDandField()
 
 	logicDetector->SetSensitiveDetector(sensDet);
 }
+

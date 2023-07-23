@@ -34,3 +34,4 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
 
 	fParticleGun->GeneratePrimaryVertex(anEvent);
 }
+
