@@ -8,7 +8,6 @@
 #include "G4PVPlacement.hh"
 #include "G4NistManager.hh"
 #include "G4SystemOfUnits.hh"
-
 #include "G4AssemblyVolume.hh"
 
 #include "detector.hh"
@@ -24,8 +23,6 @@ public:
 private:
 	G4LogicalVolume *logicDetector;
 	virtual void ConstructSDandField();
-
-	//Here is where i should describe the magnetic field later
 };
 
 #endif
