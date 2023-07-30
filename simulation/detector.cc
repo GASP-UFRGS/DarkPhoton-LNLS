@@ -19,3 +19,4 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 
 	G4cout << "Particle position: " << posParticle << G4endl;
 }
+
