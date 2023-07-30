@@ -21,7 +21,6 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 	G4LogicalVolume *logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
 
 	G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true);
-	
 
 	// Simple box for detector:
 
@@ -71,4 +70,3 @@ void MyDetectorConstruction::ConstructSDandField()
 
 	logicDetector->SetSensitiveDetector(sensDet);
 }
-

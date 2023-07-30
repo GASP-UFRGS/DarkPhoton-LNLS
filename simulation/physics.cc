@@ -16,4 +16,3 @@ MyPhysicsList::MyPhysicsList()
 
 MyPhysicsList::~MyPhysicsList()
 {}
-

@@ -34,4 +34,3 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 	    man->AddNtupleRow(0);
 	}	
 }
-
