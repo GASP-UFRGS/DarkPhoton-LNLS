@@ -2,6 +2,11 @@
 #define DETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+#include "G4Gamma.hh"
+#include "G4RootAnalysisManager.hh"
+#include "G4RunManager.hh"
+#include "G4RootAnalysisManager.hh"
+#include "G4RunManager.hh"
 
 class MySensitiveDetector : public G4VSensitiveDetector
 {
@@ -14,4 +19,3 @@ private:
 };
 
 #endif
-

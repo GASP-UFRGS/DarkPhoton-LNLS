@@ -21,7 +21,6 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 	G4LogicalVolume *logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
 
 	G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true);
-	
 
 	// Simple box for detector:
 
@@ -39,7 +38,6 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 	G4VPhysicalVolume *physVacuumLower = new G4PVPlacement (0, G4ThreeVector(0., -2*m, 5*m), logicVacuumLower, "physVacuumLower", logicWorld, false, 0, true); 
 
-
 	// Diamond target:
 
 	G4Material *diamond = new G4Material("diamond", 3.515*g/cm3, 1);
@@ -50,7 +48,6 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 	G4LogicalVolume *logicalDiamondTarget = new G4LogicalVolume(solidDiamondTarget, diamond, "logicalDiamondTarget");
 
 	G4VPhysicalVolume *physDiamond = new G4PVPlacement(0, G4ThreeVector(0., 0., -0.0201*m), logicalDiamondTarget, "physDiamond", logicWorld, false, 0, true);
-
 
 	// Detector:
 
@@ -73,4 +70,3 @@ void MyDetectorConstruction::ConstructSDandField()
 
 	logicDetector->SetSensitiveDetector(sensDet);
 }
-
