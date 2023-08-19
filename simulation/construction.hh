@@ -10,7 +10,14 @@
 #include "G4SystemOfUnits.hh"
 #include "G4AssemblyVolume.hh"
 
+#include "G4MagneticField.hh"
+#include "G4UniformMagField.hh"
+#include "G4FieldManager.hh"
+#include "G4TransportationManager.hh"
+#include "G4Region.hh"
+
 #include "detector.hh"
+#include "magneticfield.hh"
 
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -21,7 +28,14 @@ public:
 	virtual G4VPhysicalVolume *Construct();
 
 private:
-	G4LogicalVolume *logicDetector;
+    G4LogicalVolume *logicDetector;
+
+    G4MagneticField *magField;
+    G4FieldManager *fieldMgr;
+    G4LogicalVolume *magneticLogical;
+
+    G4LogicalVolume *logicWorld;
+
 	virtual void ConstructSDandField();
 };
 

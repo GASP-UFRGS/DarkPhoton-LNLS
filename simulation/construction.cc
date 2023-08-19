@@ -24,11 +24,11 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 	// Simple box for detector:
 
-	G4Box *solidVacuum = new G4Box("solidVacuum", 1*m, 1*m, 4*m);
+	G4Box *solidVacuum = new G4Box("solidVacuum", 1*m, 1*m, 3*m);
 
 	G4LogicalVolume *logicVacuum = new G4LogicalVolume(solidVacuum, vacuum, "logicalVacuum");
 
-	G4VPhysicalVolume *physVacuum = new G4PVPlacement (0, G4ThreeVector(0., 0., 3.98*m), logicVacuum, "physVacuum", logicWorld, false, 0, true);
+    G4VPhysicalVolume *physVacuum = new G4PVPlacement (0, G4ThreeVector(0., 0., 4.98*m), logicVacuum, "physVacuum", logicWorld, false, 0, true);
 
 	// Box for lower part of the detector:
 
@@ -61,12 +61,25 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 		}
 	}
 
+    // Magnetic Field:
+    auto magneticSolid = new G4Box("magneticBox", 1*m, 1*m, 1*m);
+
+    magneticLogical = new G4LogicalVolume(magneticSolid, vacuum, "magneticLogical");
+
+    new G4PVPlacement(0, G4ThreeVector(0., 0., 0.98*m), magneticLogical, "magneticPhysical", logicWorld, false, 0, true);
+
 	return physWorld;
 }
 
 void MyDetectorConstruction::ConstructSDandField()
 {
-	MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector");
+    MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector");
+    logicDetector->SetSensitiveDetector(sensDet);
 
-	logicDetector->SetSensitiveDetector(sensDet);
+    magField = new MagneticField();
+    fieldMgr = new G4FieldManager();
+    fieldMgr->SetDetectorField(magField);
+    fieldMgr->CreateChordFinder(magField);
+
+    magneticLogical->SetFieldManager(fieldMgr, true);
 }
