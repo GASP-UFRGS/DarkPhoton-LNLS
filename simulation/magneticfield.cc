@@ -5,9 +5,7 @@
 #include "globals.hh"
 
 MagneticField::MagneticField() : G4MagneticField()
-{
-
-}
+{}
 
 MagneticField::~MagneticField()
 {
