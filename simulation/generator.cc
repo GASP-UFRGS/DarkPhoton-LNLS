@@ -24,7 +24,7 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
 	G4double posX = randomX/10.;
 	G4double posY = randomY/10.;
 
-	G4ThreeVector pos(posX*m, posY*m,-1*m);
+	G4ThreeVector pos(0., 0.,-3.25*m); //G4ThreeVector pos(posX*m, posY*m,-1*m);
 	G4ThreeVector mom(0.,0.,1);
 
 	fParticleGun->SetParticlePosition(pos);
