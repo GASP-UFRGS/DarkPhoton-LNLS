@@ -14,6 +14,7 @@
 #include "G4VisAttributes.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4MultiUnion.hh"
+#include "G4Transform3D.hh"
 
 #include "G4MagneticField.hh"
 #include "G4UniformMagField.hh"

@@ -14,14 +14,14 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
 
 	man->CreateNtuple("Hits", "Hits");
 	man->CreateNtupleIColumn("fEvent");
-	man->CreateNtupleDColumn("photonEnergy");
-	man->CreateNtupleDColumn("photonX");
-	man->CreateNtupleDColumn("photonY");
-	man->CreateNtupleDColumn("photonZ");
-    man->CreateNtupleDColumn("posistronEnergy");
-    man->CreateNtupleDColumn("positronX");
-    man->CreateNtupleDColumn("positronY");
-    man->CreateNtupleDColumn("positronZ");
+	man->CreateNtupleDColumn("PhotonEnergy");
+	man->CreateNtupleDColumn("PhotonX");
+	man->CreateNtupleDColumn("PhotonY");
+	man->CreateNtupleDColumn("PhotonZ");
+    man->CreateNtupleDColumn("PositronEnergy");
+    man->CreateNtupleDColumn("PositronX");
+    man->CreateNtupleDColumn("PositronY");
+    man->CreateNtupleDColumn("PositronZ");
 	man->FinishNtuple(0);
 }
 

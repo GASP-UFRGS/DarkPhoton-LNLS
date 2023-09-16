@@ -21,47 +21,50 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
     // Simple box for detector:
     G4int boxWidth = 10*cm;
-
     G4Box *solidVacuum = new G4Box("solidVacuum", boxWidth, boxWidth, 2*m);
 
-    G4LogicalVolume *logicVacuum = new G4LogicalVolume(solidVacuum, vacuum, "logicalVacuum");
-
-    G4VPhysicalVolume *physVacuum = new G4PVPlacement (0, G4ThreeVector(0., 0., 1*m), logicVacuum, "physVacuum", logicWorld, false, 0, true);
-
     // Magnetic Field:
-
     auto magneticSolid = new G4Box("magneticBox", boxWidth, boxWidth, 1*m);
-
     magneticLogical = new G4LogicalVolume(magneticSolid, vacuum, "magneticLogical");
-
     new G4PVPlacement(0, G4ThreeVector(0., 0., -2*m), magneticLogical, "magneticPhysical", logicWorld, false, 0, true);
 
     // Lower part of detector:
-
-    G4int trapWidth = 20*cm;
+    G4int trapWidth = 0.2*m;
     G4int trapHeight = 1.5*m;
+    G4int trapYPos = -84*cm;
 
-    G4int trapYPos = -85*cm;
-
+    // First trapeze:
     G4Trap *solidVacuumTrap = new G4Trap("solidVacuumTrap", trapWidth, trapHeight, 1*cm, 4.2*m); //(x width, y(height), plane, base)
-
-    G4LogicalVolume *logicVacuumTrap = new G4LogicalVolume(solidVacuumTrap, vacuum, "logicalVacuumTrap");
-
-    auto trapRot = new G4RotationMatrix();
-    trapRot->rotateY(270.*deg);
-
-    G4VPhysicalVolume *physVacuumTrap = new G4PVPlacement(trapRot, G4ThreeVector(0., trapYPos, 0.9*m), logicVacuumTrap, "physVacuumTrap", logicWorld, false, 0, true);
+    G4RotationMatrix trapRot = G4RotationMatrix();
+    trapRot.rotateY(90.*deg);
 
     // Second trapeze:
-
     G4Trap *solidVacuumTrap2 = new G4Trap("solidVacuumTrap2", trapWidth, trapHeight, 1*cm, 1*m);
+    G4RotationMatrix trapRot2 = G4RotationMatrix();
+    trapRot2.rotateY(-90.*deg);
 
-    G4LogicalVolume *logicVacuumTrap2 = new G4LogicalVolume(solidVacuumTrap2, vacuum, "logicalVacuumTrap2");
+    //Union:
+    G4RotationMatrix boxRot = G4RotationMatrix();
 
-    auto trapRot2 = new G4RotationMatrix();
-    trapRot2->rotateY(90.*deg);
+    G4ThreeVector boxPos = G4ThreeVector(0., 0., 1*m);
+    G4ThreeVector trap1Pos = G4ThreeVector(0., trapYPos, 0.9*m);
+    G4ThreeVector trap2Pos = G4ThreeVector(0., trapYPos, 2.20*m);
 
-    G4VPhysicalVolume *physVacuumTrap2 = new G4PVPlacement(trapRot2, G4ThreeVector(0., trapYPos, 2.20*m), logicVacuumTrap2, "physVacuumTrap2", logicWorld, false, 0, true);
+    G4Transform3D box = G4Transform3D(boxRot, boxPos);
+    G4Transform3D trap1 = G4Transform3D(trapRot, trap1Pos);
+    G4Transform3D trap2 = G4Transform3D(trapRot2, trap2Pos);
+
+    G4MultiUnion *solidTube = new G4MultiUnion("solidTube");
+
+    solidTube->AddNode(solidVacuum, box);
+    solidTube->AddNode(solidVacuumTrap, trap1);
+    solidTube->AddNode(solidVacuumTrap2, trap2);
+
+    solidTube->Voxelize();
+
+    G4LogicalVolume *logicalTube = new G4LogicalVolume(solidTube, vacuum, "logicalTube");
+
+    new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicalTube, "physicalTube", logicWorld, false, 0, true);
 
     // Diamond target:
 

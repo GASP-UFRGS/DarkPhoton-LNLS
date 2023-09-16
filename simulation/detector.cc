@@ -20,8 +20,11 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
         G4double energy = preStepPoint->GetTotalEnergy();
 		G4ThreeVector posParticle = preStepPoint->GetPosition();
 
-		G4cout << "Particle position is: " << posParticle << G4endl;
-		G4cout << "Particle energy is: " << energy << G4endl;
+        G4ThreeVector detectorPos = G4ThreeVector(0, 0, 3*m);
+        G4ThreeVector newPos = posParticle - detectorPos;
+
+		G4cout << "Photon position is: " << posParticle << G4endl;
+		G4cout << "Photon energy is: " << energy << G4endl;
 
 	    G4int evt = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
 
@@ -30,7 +33,6 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 	    man->FillNtupleDColumn(1, energy);
 	    man->FillNtupleDColumn(2, posParticle[0]);
 	    man->FillNtupleDColumn(3, posParticle[1]);
-	    man->FillNtupleDColumn(4, posParticle[2]);
 	    man->AddNtupleRow(0);
 	}	
 }
