@@ -29,10 +29,16 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 	    G4int evt = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
 
 	    auto *man = G4RootAnalysisManager::Instance();
+
 	    man->FillNtupleIColumn(0, evt);
 	    man->FillNtupleDColumn(1, energy);
 	    man->FillNtupleDColumn(2, posParticle[0]);
 	    man->FillNtupleDColumn(3, posParticle[1]);
+
+        if (energy <= 100*MeV) {
+            man->FillNtupleDColumn(7, energy);
+        }
+
 	    man->AddNtupleRow(0);
 	}	
 }

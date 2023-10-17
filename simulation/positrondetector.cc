@@ -28,8 +28,7 @@ G4bool MyPositronDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist
 
     auto *man = G4RootAnalysisManager::Instance();
     man->FillNtupleDColumn(4, positronEnergy);
-    man->FillNtupleDColumn(5, posParticle[0]);
-    man->FillNtupleDColumn(6, posParticle[1]);
+    man->FillNtupleDColumn(5, newPos[0]);
+    man->FillNtupleDColumn(6, newPos[1]);
     man->AddNtupleRow(0);
-
 }
