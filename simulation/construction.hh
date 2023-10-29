@@ -22,7 +22,7 @@
 #include "G4TransportationManager.hh"
 #include "G4Region.hh"
 
-#include "calodetector.hh"
+#include "detector.hh"
 #include "positrondetector.hh"
 #include "magneticfield.hh"
 
