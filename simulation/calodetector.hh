@@ -7,6 +7,7 @@
 #include "G4RunManager.hh"
 #include "G4RootAnalysisManager.hh"
 #include "G4RunManager.hh"
+#include "G4SystemOfUnits.hh"
 
 class MySensitiveDetector : public G4VSensitiveDetector
 {
