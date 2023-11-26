@@ -11,6 +11,9 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
 	G4Track *track = aStep->GetTrack();
 
 	track->SetTrackStatus(fStopAndKill);
+    G4cout << "TRACK É: " << track->GetDefinition() << G4endl;
+    G4cout << "G4GAMMA É: " << G4Gamma::Definition() << G4endl;
+    G4cout << "PDGCODE É: " << track->GetDynamicParticle()->GetPDGcode() << G4endl;
 
 	if (track->GetDefinition() == G4Gamma::Definition()) {
         G4StepPoint *preStepPoint = aStep->GetPreStepPoint();
