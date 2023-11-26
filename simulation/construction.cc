@@ -81,9 +81,9 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
     G4Box *solidDetector = new G4Box("solidDetector", boxWidth, boxWidth, 0.01*m);
 
-    logicDetector = new G4LogicalVolume(solidDetector, worldMat, "logicDetector");
+    calorimeterDetector = new G4LogicalVolume(solidDetector, worldMat, "logicDetector");
 
-    G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(0, 0, 3.01*m), logicDetector, "physDetector", logicWorld, false, 0, true);
+    G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(0, 0, 3.01*m), calorimeterDetector, "physDetector", logicWorld, false, 0, true);
 
     // Positron detector:
 
@@ -109,7 +109,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     magneticLogical->SetVisAttributes(visAttributes);
 
     visAttributes = new G4VisAttributes(G4Colour(1.0, 1.0, 0.0)); // Photon detector - yellow
-    logicDetector->SetVisAttributes(visAttributes);
+    calorimeterDetector->SetVisAttributes(visAttributes);
 
     visAttributes = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0)); // Positron detector - red
     positronDetector->SetVisAttributes(visAttributes);
@@ -119,10 +119,10 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 void MyDetectorConstruction::ConstructSDandField()
 {
-    MySensitiveDetector *sensDet = new MySensitiveDetector("SensitiveDetector");
+    MySensitiveDetector *caloDetector = new MySensitiveDetector("SensitiveDetector");
     MyPositronDetector *posDetector = new MyPositronDetector("PositronDetector");
 
-    logicDetector->SetSensitiveDetector(sensDet);
+    calorimeterDetector->SetSensitiveDetector(caloDetector);
     positronDetector->SetSensitiveDetector(posDetector);
 
     magField = new MagneticField();
