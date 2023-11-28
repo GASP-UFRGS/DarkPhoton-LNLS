@@ -29,13 +29,13 @@
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
-	MyDetectorConstruction();
-	~MyDetectorConstruction();
+    MyDetectorConstruction();
+    ~MyDetectorConstruction();
 
-	virtual G4VPhysicalVolume *Construct();
+    virtual G4VPhysicalVolume *Construct();
 
 private:
-    G4LogicalVolume *logicDetector;
+    G4LogicalVolume *calorimeterDetector;
     G4LogicalVolume *positronDetector;
 
     G4MagneticField *magField;
@@ -44,7 +44,7 @@ private:
 
     G4LogicalVolume *logicWorld;
 
-	virtual void ConstructSDandField();
+    virtual void ConstructSDandField();
 };
 
 #endif

@@ -31,8 +31,8 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
 
 void MyRunAction::EndOfRunAction(const G4Run*)
 {
-	auto *man = G4RootAnalysisManager::Instance();
+    auto *man = G4RootAnalysisManager::Instance();
 
-	man->Write();
-	man->CloseFile();
+    man->Write();
+    man->CloseFile();
 }
