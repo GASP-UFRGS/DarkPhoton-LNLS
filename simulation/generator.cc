@@ -18,13 +18,13 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
     G4String particleName="e+";
     G4ParticleDefinition *particle = particleTable->FindParticle("e+");
 
-    G4double randomX = rand() % 10 + (-5);
-    G4double randomY = rand() % 10 + (-5);
+    G4double randomX = rand() % 10;
+    G4double randomY = rand() % 10;
 
-    G4double posX = randomX/10.;
-    G4double posY = randomY/10.;
+    G4double posX = randomX/10.*cm;
+    G4double posY = randomY/10.*cm;
 
-    G4ThreeVector pos(0., 0.,-3.25*m); //G4ThreeVector pos(posX*m, posY*m,-1*m);
+    G4ThreeVector pos(posX, posY,-3.25*m); //G4ThreeVector pos(posX*m, posY*m,-1*m);
     G4ThreeVector mom(0.,0.,1);
 
     fParticleGun->SetParticlePosition(pos);

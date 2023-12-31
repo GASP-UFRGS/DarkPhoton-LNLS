@@ -16,6 +16,7 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("PhotonEnergy");
     man->CreateNtupleDColumn("PhotonX");
     man->CreateNtupleDColumn("PhotonY");
+    man->CreateNtupleDColumn("MissedMass");
 
     man->FinishNtuple(0);
 
