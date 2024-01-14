@@ -6,9 +6,9 @@
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
-#include "construction.hh"
-#include "physics.hh"
-#include "action.hh"
+#include "DetectorConstruction.hh"
+#include "PhysicsList.hh"
+#include "ActionInitialization.hh"
 
 int main(int argc, char** argv)
 {

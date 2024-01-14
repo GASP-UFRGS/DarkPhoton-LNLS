@@ -9,6 +9,9 @@ MySensitiveDetector::MySensitiveDetector(G4String name) : G4VSensitiveDetector(n
 MySensitiveDetector::~MySensitiveDetector()
 {}
 
+void MySensitiveDetector::RegisterPrimitive(G4VPrimitiveScorer *scorer)
+{}
+
 G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist)
 {
     G4Track *track = aStep->GetTrack();
@@ -35,7 +38,7 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhis
     G4cout << "\n\n EVENT ID IS: " << evt << "\n\n" << G4endl;
 
     auto *man = G4RootAnalysisManager::Instance();
-    man->FillNtupleIColumn(0, 0, evt);
+    //man->FillNtupleIColumn(0, 0, evt);
 
     // Calculations for missed mass:
     G4ThreeVector targetPos = G4ThreeVector(0., 0., -3.2*m); //same position of diamond target in construction.cc

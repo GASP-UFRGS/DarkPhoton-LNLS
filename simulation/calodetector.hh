@@ -8,12 +8,16 @@
 #include "G4RootAnalysisManager.hh"
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4VPrimitiveScorer.hh"
+#include "G4SDManager.hh"
 
 class MySensitiveDetector : public G4VSensitiveDetector
 {
 public:
     MySensitiveDetector(G4String);
     ~MySensitiveDetector();
+
+    void RegisterPrimitive(G4VPrimitiveScorer* scorer);
 
 private:
     virtual G4bool ProcessHits(G4Step *, G4TouchableHistory *);

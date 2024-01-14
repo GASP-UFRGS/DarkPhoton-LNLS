@@ -6,6 +6,9 @@ MyPositronDetector::MyPositronDetector(G4String name) : G4VSensitiveDetector(nam
 MyPositronDetector::~MyPositronDetector()
 {}
 
+void MyPositronDetector::RegisterPrimitive(G4VPrimitiveScorer *scorer)
+{}
+
 G4bool MyPositronDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist)
 {
     G4Track *track = aStep->GetTrack();
@@ -29,7 +32,7 @@ G4bool MyPositronDetector::ProcessHits(G4Step *aStep, G4TouchableHistory *ROhist
     //G4cout << "\n\n EVENT ID IS: " << evt << G4endl;
 
     auto *man = G4RootAnalysisManager::Instance();
-    man->FillNtupleIColumn(1, 0, evt);
+    //man->FillNtupleIColumn(1, 0, evt);
 
     if (track->GetDefinition() == G4Positron::Definition()) {
 

@@ -1,4 +1,4 @@
-#include "action.hh"
+#include "ActionInitialization.hh"
 
 MyActionInitialization::MyActionInitialization()
 {}
@@ -13,4 +13,7 @@ void MyActionInitialization::Build() const
 
     MyRunAction *runAction = new MyRunAction();
     SetUserAction(runAction);
+
+    EventAction *eventAction = new EventAction();
+    SetUserAction(eventAction);
 }

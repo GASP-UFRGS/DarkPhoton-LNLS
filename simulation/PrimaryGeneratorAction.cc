@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "PrimaryGeneratorAction.hh"
 
 #include <random>
 
