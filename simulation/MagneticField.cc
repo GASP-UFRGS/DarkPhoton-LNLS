@@ -1,4 +1,4 @@
-#include "magneticfield.hh"
+#include "MagneticField.hh"
 
 #include "G4GenericMessenger.hh"
 #include "G4SystemOfUnits.hh"
