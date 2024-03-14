@@ -37,20 +37,23 @@
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
-    MyDetectorConstruction();
-    ~MyDetectorConstruction();
+    MyDetectorConstruction() = default;
+    ~MyDetectorConstruction() = default;
 
-    virtual G4VPhysicalVolume *Construct();
+    G4VPhysicalVolume *Construct() override;
+    void ConstructSDandField() override;
 
 private:
     G4LogicalVolume *calorimeterLV;
     G4LogicalVolume *positronDetectorLV;
 
+    G4LogicalVolume *fakeDetectorLV;
+
     G4MagneticField *magField;
     G4FieldManager *fieldMgr;
     G4LogicalVolume *magneticLogical;
 
-    virtual void ConstructSDandField();
+    //virtual void ConstructSDandField();
 };
 
 #endif

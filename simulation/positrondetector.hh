@@ -11,17 +11,33 @@
 #include "G4SystemOfUnits.hh"
 #include "G4VPrimitiveScorer.hh"
 #include "G4SDManager.hh"
+#include "G4Step.hh"
 
-class MyPositronDetector : public G4VSensitiveDetector
-{
+#include "DetectorConstruction.hh"
+#include "Hits.hh"
+
+class MyDetectorConstruction;
+class G4String;
+class G4Step;
+class G4TouchableHistory;
+class G4HCofThisEvent;
+
+class MyPositronDetector : public G4VSensitiveDetector {
 public:
-    MyPositronDetector(G4String);
+    MyPositronDetector(const G4String& name, const G4String& hitsCollectionName, MyDetectorConstruction* det);
     ~MyPositronDetector();
 
-    void RegisterPrimitive(G4VPrimitiveScorer* scorer);
+    // void RegisterPrimitive(G4VPrimitiveScorer* scorer);
+
+    G4bool ProcessHits(G4Step* step, G4TouchableHistory* history);
+    void Initialize(G4HCofThisEvent* hce);
+    void EndOfEvent(G4HCofThisEvent* hce);
 
 private:
-    virtual G4bool ProcessHits(G4Step *, G4TouchableHistory *);
+    HitsCollection* hitsCollection;
+    int hcid;
+    int eventID;
+    MyDetectorConstruction* det;
 };
 
 #endif

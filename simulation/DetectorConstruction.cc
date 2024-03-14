@@ -1,20 +1,14 @@
 #include "DetectorConstruction.hh"
 
-MyDetectorConstruction::MyDetectorConstruction()
-{}
-
-MyDetectorConstruction::~MyDetectorConstruction()
-{}
 
 G4VPhysicalVolume *MyDetectorConstruction::Construct()
 {
     G4NistManager *nist = G4NistManager::Instance();
     G4Material *worldMat = nist->FindOrBuildMaterial("G4_Galactic");
 
-    G4NistManager* manager = G4NistManager::Instance();
-    G4Material* vacuum = manager->FindOrBuildMaterial("G4_Galactic");
+    G4Material* vacuum = nist->FindOrBuildMaterial("G4_Galactic");
 
-    manager->FindOrBuildMaterial("G4_Si");
+    nist->FindOrBuildMaterial("G4_Si");
     auto silicon = G4Material::GetMaterial("G4_Si");
 
     // BGO cristal (Bi4Ge3O12)
@@ -24,7 +18,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     BGO->AddElement(nist->FindOrBuildElement("O"), 12);
 
     // Veto: plastic scintillator bars
-    G4Material* plastic = manager->FindOrBuildMaterial("G4_A-150_TISSUE");
+    G4Material* plastic = nist->FindOrBuildMaterial("G4_A-150_TISSUE");
 
     // World volume:
     G4Box *solidWorld = new G4Box("solidWorld", 10*m, 5*m, 10*m);
@@ -101,12 +95,20 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
     G4Box *positronDetectorS = new G4Box("PositronDetector", boxWidth, 0.5*m, 0.01*m);
 
-    positronDetectorLV = new G4LogicalVolume(positronDetectorS, plastic, "PositronDetectorLV");
+    positronDetectorLV = new G4LogicalVolume(positronDetectorS, vacuum, "PositronDetectorLV");
 
     auto detectorRot = new G4RotationMatrix();
     detectorRot->rotateX(-33.69*deg);
 
-    G4VPhysicalVolume *physDetector2 = new G4PVPlacement(detectorRot, G4ThreeVector(0, -1.25*m, 2.21*m), positronDetectorLV, "PositronDetector", logicWorld, false, 0, true);
+    G4VPhysicalVolume *physDetector2 = new G4PVPlacement(detectorRot, G4ThreeVector(0, -1.35*m, 2.35*m), positronDetectorLV, "PositronDetector", logicWorld, false, 0, true);
+
+    // Fake detector:
+
+    G4Box *fakeDetectorS = new G4Box("FakeDetector", boxWidth, 0.5*m, 0.01*m);
+
+    fakeDetectorLV = new G4LogicalVolume(fakeDetectorS, vacuum, "FakeDetectorLV");
+
+    G4VPhysicalVolume *physFakeDetector = new G4PVPlacement(detectorRot, G4ThreeVector(0, -1.25*m, 2.21*m), fakeDetectorLV, "FakeDetector", logicWorld, false, 0, true);
 
     // Visualization attributes:
 
@@ -131,6 +133,14 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 void MyDetectorConstruction::ConstructSDandField()
 {
+    if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("Detector",0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("Detector");
+    G4SDManager* sdMan = G4SDManager::GetSDMpointer();
+    MyPositronDetector* sd = new MyPositronDetector("Detector", "DetectorCollection", this);
+    sdMan->AddNewDetector(sd);
+    SetSensitiveDetector(fakeDetectorLV, sd);
+    G4cout << "Sensitive Detector created" << G4endl;
+
+
     G4SDManager::GetSDMpointer()->SetVerboseLevel(1);
 
     auto caloDetector = new G4MultiFunctionalDetector("Calorimeter");
