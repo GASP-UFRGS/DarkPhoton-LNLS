@@ -1,6 +1,5 @@
 #include "DetectorConstruction.hh"
 
-
 G4VPhysicalVolume *MyDetectorConstruction::Construct()
 {
     G4NistManager *nist = G4NistManager::Instance();
@@ -76,39 +75,33 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
     G4Material *diamond = new G4Material("diamond", 3.515*g/cm3, 1);
     diamond->AddElement(nist->FindOrBuildElement("C"), 1);
-
     G4Box *solidDiamondTarget = new G4Box("solidDiamondTarget", 2*cm, 2*cm, 0.0001*m);
-
     G4LogicalVolume *logicalDiamondTarget = new G4LogicalVolume(solidDiamondTarget, diamond, "logicalDiamondTarget");
-
     G4VPhysicalVolume *physDiamond = new G4PVPlacement(0, G4ThreeVector(0., 0., -3.2*m), logicalDiamondTarget, "physDiamond", logicWorld, false, 0, true);
 
     // Photon detector:
 
     G4Box *calorimeterS = new G4Box("Calorimeter", boxWidth, boxWidth, 0.01*m);
-
     calorimeterLV = new G4LogicalVolume(calorimeterS, BGO, "CalorimeterLV");
-
-    G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(0, 0, 3.01*m), calorimeterLV, "Calorimeter", logicWorld, false, 0, true);
+    G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(0, 0, 3.10*m), calorimeterLV, "Calorimeter", logicWorld, false, 0, true);
 
     // Positron detector:
 
     G4Box *positronDetectorS = new G4Box("PositronDetector", boxWidth, 0.5*m, 0.01*m);
-
     positronDetectorLV = new G4LogicalVolume(positronDetectorS, vacuum, "PositronDetectorLV");
-
     auto detectorRot = new G4RotationMatrix();
     detectorRot->rotateX(-33.69*deg);
-
     G4VPhysicalVolume *physDetector2 = new G4PVPlacement(detectorRot, G4ThreeVector(0, -1.35*m, 2.35*m), positronDetectorLV, "PositronDetector", logicWorld, false, 0, true);
 
-    // Fake detector:
+    // Fake detectors:
 
-    G4Box *fakeDetectorS = new G4Box("FakeDetector", boxWidth, 0.5*m, 0.01*m);
+    G4Box *fakeCaloDetectorS = new G4Box("FakeCaloDetector", boxWidth, boxWidth, 0.01*m);
+    fakeCaloDetectorLV = new G4LogicalVolume(fakeCaloDetectorS, vacuum, "FakeCaloDetectorLV");
+    G4VPhysicalVolume *physFakeCaloDetector = new G4PVPlacement(0, G4ThreeVector(0, 0, 3.01*m), fakeCaloDetectorLV, "FakeCaloDetector", logicWorld, false, 0, true);
 
-    fakeDetectorLV = new G4LogicalVolume(fakeDetectorS, vacuum, "FakeDetectorLV");
-
-    G4VPhysicalVolume *physFakeDetector = new G4PVPlacement(detectorRot, G4ThreeVector(0, -1.25*m, 2.21*m), fakeDetectorLV, "FakeDetector", logicWorld, false, 0, true);
+    G4Box *fakePosDetectorS = new G4Box("FakePosDetector", boxWidth, 0.5*m, 0.01*m);
+    fakePosDetectorLV = new G4LogicalVolume(fakePosDetectorS, vacuum, "FakePosDetectorLV");
+    G4VPhysicalVolume *physFakePosDetector = new G4PVPlacement(detectorRot, G4ThreeVector(0, -1.25*m, 2.21*m), fakePosDetectorLV, "FakePosDetector", logicWorld, false, 0, true);
 
     // Visualization attributes:
 
@@ -133,12 +126,20 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
 
 void MyDetectorConstruction::ConstructSDandField()
 {
-    if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("Detector",0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("Detector");
-    G4SDManager* sdMan = G4SDManager::GetSDMpointer();
-    MyPositronDetector* sd = new MyPositronDetector("Detector", "DetectorCollection", this);
-    sdMan->AddNewDetector(sd);
-    SetSensitiveDetector(fakeDetectorLV, sd);
+    if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakeCaloDetector", 0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakeCaloDetector");
+    G4SDManager* caloSDMan = G4SDManager::GetSDMpointer();
+    MyPositronDetector* caloSD = new MyPositronDetector("FakeCaloDetector", "FakeCaloDetectorCollection", this);
+    caloSDMan->AddNewDetector(caloSD);
+    SetSensitiveDetector(fakeCaloDetectorLV, caloSD);
     G4cout << "Sensitive Detector created" << G4endl;
+
+    if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakePosDetector", 0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakePosDetector");
+    G4SDManager* posSDMan = G4SDManager::GetSDMpointer();
+    MyPositronDetector* posSD = new MyPositronDetector("FakePosDetector", "FakePosDetectorCollection", this);
+    posSDMan->AddNewDetector(posSD);
+    SetSensitiveDetector(fakePosDetectorLV, posSD);
+    G4cout << "Sensitive Detector created" << G4endl;
+
 
 
     G4SDManager::GetSDMpointer()->SetVerboseLevel(1);

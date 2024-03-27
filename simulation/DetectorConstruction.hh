@@ -47,7 +47,8 @@ private:
     G4LogicalVolume *calorimeterLV;
     G4LogicalVolume *positronDetectorLV;
 
-    G4LogicalVolume *fakeDetectorLV;
+    G4LogicalVolume *fakeCaloDetectorLV;
+    G4LogicalVolume *fakePosDetectorLV;
 
     G4MagneticField *magField;
     G4FieldManager *fieldMgr;

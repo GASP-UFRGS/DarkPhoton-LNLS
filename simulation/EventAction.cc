@@ -7,6 +7,9 @@
 #include "G4HCofThisEvent.hh"
 #include "G4UnitsTable.hh"
 
+#include "G4PrimaryVertex.hh"
+#include "G4PrimaryParticle.hh"
+
 #include "Randomize.hh"
 #include <iomanip>
 
@@ -66,6 +69,16 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     auto gapEdep = GetSum(GetHitsCollection(fGapEdepHCID, event));
     auto absoTrackLength = GetSum(GetHitsCollection(fAbsoTrackLengthHCID, event));
     auto gapTrackLength = GetSum(GetHitsCollection(fGapTrackLengthHCID, event));
+
+
+    // Retrieve primary vertex
+    G4PrimaryVertex* primaryVertex = event->GetPrimaryVertex(0);
+
+    // Acces primary particles generated in this vertex
+    G4PrimaryParticle* primaryParticle = primaryVertex->GetPrimary();
+    G4String particleName = primaryParticle->GetParticleDefinition()->GetParticleName();
+
+    G4cout << "\n\n\n\n PRINTING PARTICLE NAME HERE: " << particleName << "\n\n\n\n" << G4endl; // This is the name of the particles that was generated!!!!!!!
 
     // get analysis manager
     auto *man = G4RootAnalysisManager::Instance();

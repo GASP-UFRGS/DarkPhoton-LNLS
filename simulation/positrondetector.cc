@@ -50,26 +50,36 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
     G4StepPoint *preStepPoint = step->GetPreStepPoint();
     G4StepPoint *postStepPoint = step->GetPostStepPoint();
 
-    G4double positronEnergy = preStepPoint->GetTotalEnergy();
+    G4double particleEnergy = preStepPoint->GetTotalEnergy();
     G4ThreeVector posParticle = preStepPoint->GetPosition();
 
     G4ThreeVector detectorPos = G4ThreeVector(0, -1.25*m, 2.21*m);
     G4ThreeVector newPos = posParticle - detectorPos;
 
     G4cout << "Particle position in positrondetector is: " << newPos << G4endl;
-    G4cout << "Particle energy in positrondetector is: " << positronEnergy << G4endl;
+    G4cout << "Particle energy in positrondetector is: " << particleEnergy << G4endl;
 
     auto *man = G4RootAnalysisManager::Instance();
     //man->FillNtupleIColumn(1, 0, evt);
 
-    if (particle == G4Positron::Positron()) {
+    if (particle == G4Gamma::Gamma()) {
+        man->FillNtupleIColumn(0, 0, eventNumber);
+        man->FillNtupleDColumn(0, 1, particleEnergy);
+        man->FillNtupleDColumn(0, 2, posParticle[0]);
+        man->FillNtupleDColumn(0, 3, posParticle[1]);
+        //man->FillNtupleDColumn(0, 4, missMass);
 
-        man->FillNtupleDColumn(1, 1, positronEnergy);
+        man->AddNtupleRow(0);
+    }
+
+    if (particle == G4Positron::Positron()) {
+        man->FillNtupleIColumn(1, 0, eventNumber);
+        man->FillNtupleDColumn(1, 1, particleEnergy);
         man->FillNtupleDColumn(1, 2, newPos[0]);
         man->FillNtupleDColumn(1, 3, newPos[1]);
 
+        man->AddNtupleRow(1);
     }
-    man->AddNtupleRow(1);
 
     man->FillNtupleIColumn(2, 1, eventNumber);
     man->AddNtupleRow(2);
