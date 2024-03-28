@@ -74,13 +74,14 @@ void EventAction::EndOfEventAction(const G4Event* event) {
 
     G4cout << "\n\n\n PRINTING EVENTID HERE: \n\n " << eventID << "\n\n PRINTING EVENTID HERE \n\n\n" << G4endl;
 
+    G4cout << "The energy deposit in calodetector (EventAction) is: " << absoEdep << G4endl;
+    G4cout << "The energy deposit in positrondetector (EventAction) is: " << absoEdep << G4endl;
 
     man->FillNtupleIColumn(3, 0, eventID);
     man->FillNtupleDColumn(3, 1, absoEdep);
     man->FillNtupleDColumn(3, 2, gapEdep);
     man->FillNtupleDColumn(3, 3, absoTrackLength);
     man->FillNtupleDColumn(3, 4, gapTrackLength);
-
 
     man->AddNtupleRow(3);
 
@@ -92,4 +93,3 @@ void EventAction::EndOfEventAction(const G4Event* event) {
         PrintEventStatistics(fAbsoEdepHCID, fAbsoTrackLengthHCID, fGapEdepHCID, fGapTrackLengthHCID);
     }
 }
-

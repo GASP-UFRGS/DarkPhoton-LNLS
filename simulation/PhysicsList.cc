@@ -16,3 +16,11 @@ MyPhysicsList::MyPhysicsList()
 
 MyPhysicsList::~MyPhysicsList()
 {}
+
+void MyPhysicsList::ConstructParticle() {
+    G4VModularPhysicsList::ConstructParticle();
+}
+
+void MyPhysicsList::ConstructProcess() {
+    G4VModularPhysicsList::ConstructProcess();
+}
