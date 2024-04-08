@@ -4,11 +4,17 @@ MyPositronDetector::MyPositronDetector(const G4String& name, const G4String& hit
 : G4VSensitiveDetector(name), hitsCollection(0), hcid(-1), det(_det) {
     collectionName.insert(hitsCollectionName);
     G4cout << "Creating Sensitive Detector named: " << name << G4endl;
+
+    photonsDetected = false;
+    positronsDetected = false;
 }
 
 MyPositronDetector::~MyPositronDetector() {}
 
 void MyPositronDetector::Initialize(G4HCofThisEvent* hce) {
+    photonsDetected = false;
+    positronsDetected = false;
+
     // Create hits collection
     hitsCollection = new HitsCollection(SensitiveDetectorName, collectionName[0]);
 
@@ -59,6 +65,15 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
     G4cout << "Particle position in positrondetector is: " << newPos << G4endl;
     G4cout << "Particle energy in positrondetector is: " << particleEnergy << G4endl;
 
+    // Check if the particle is a photon
+    if (particle == G4Gamma::Gamma()) {
+        photonsDetected = true;
+    }
+    // Check if the particle is a positron
+    else if (particle == G4Positron::Positron()) {
+        positronsDetected = true;
+    }
+
     auto *man = G4RootAnalysisManager::Instance();
     //man->FillNtupleIColumn(1, 0, evt);
 
@@ -88,4 +103,15 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
 }
 
 void MyPositronDetector::EndOfEvent(G4HCofThisEvent* hce)
-{}
+{
+    // Classify the event based on the particles detected
+    if (photonsDetected && positronsDetected) {
+        G4cout << "Event with both photons and positrons" << G4endl;
+    } else if (photonsDetected) {
+        G4cout << "Event with only photons" << G4endl;
+    } else if (positronsDetected) {
+        G4cout << "Event with only positrons" << G4endl;
+    } else {
+        G4cout << "Event with no photons or positrons" << G4endl;
+    }
+}
