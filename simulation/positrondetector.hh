@@ -13,6 +13,9 @@
 #include "G4SDManager.hh"
 #include "G4Step.hh"
 
+#include "G4HCofThisEvent.hh"
+#include "G4Track.hh"
+
 #include "DetectorConstruction.hh"
 #include "Hits.hh"
 
@@ -34,6 +37,9 @@ public:
     void EndOfEvent(G4HCofThisEvent* hce);
 
 private:
+    G4bool photonsDetected;
+    G4bool positronsDetected;
+
     HitsCollection* hitsCollection;
     int hcid;
     int eventID;

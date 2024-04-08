@@ -4,11 +4,17 @@ MyPositronDetector::MyPositronDetector(const G4String& name, const G4String& hit
 : G4VSensitiveDetector(name), hitsCollection(0), hcid(-1), det(_det) {
     collectionName.insert(hitsCollectionName);
     G4cout << "Creating Sensitive Detector named: " << name << G4endl;
+
+    photonsDetected = false;
+    positronsDetected = false;
 }
 
 MyPositronDetector::~MyPositronDetector() {}
 
 void MyPositronDetector::Initialize(G4HCofThisEvent* hce) {
+    photonsDetected = false;
+    positronsDetected = false;
+
     // Create hits collection
     hitsCollection = new HitsCollection(SensitiveDetectorName, collectionName[0]);
 
@@ -40,9 +46,23 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
         }
     }
 
-    //Get positron when it is generated
-    if (particle == G4Positron::Positron() && step->IsFirstStepInVolume()) {
-        hit->AddNumberOfPositrons();
+    // Check if the particle is a photon
+    if (particle == G4Gamma::Gamma()) {
+        photonsDetected = true;
+
+        //Get photon when it is generated
+        if(step->IsFirstStepInVolume()) {
+            hit->AddNumberOfPhotons();
+        }
+    }
+    // Check if the particle is a positron
+    if (particle == G4Positron::Positron()) {
+        positronsDetected = true;
+
+        //Get positron when it is generated
+        if(step->IsFirstStepInVolume()) {
+            hit->AddNumberOfPositrons();
+        }
     }
 
     hitsCollection->insert(hit);
@@ -88,4 +108,23 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
 }
 
 void MyPositronDetector::EndOfEvent(G4HCofThisEvent* hce)
-{}
+{
+    /*
+    // Prints based on the particles detected
+    if (photonsDetected && positronsDetected) {
+        G4cout << "Event with both photons and positrons" << G4endl;
+    } else if (photonsDetected) {
+        G4cout << "Event with only photons" << G4endl;
+    } else if (positronsDetected) {
+        G4cout << "Event with only positrons" << G4endl;
+    } else {
+        G4cout << "Event with no photons or positrons" << G4endl;
+    }
+    */
+
+    // Get the number of hits in the hitsCollection
+    G4int nOfHits = hitsCollection->entries();
+
+    // loop through the hitsCollection
+    for (G4int i = 0; i < nOfHits; i++) (*hitsCollection)[i]->Print();
+}
