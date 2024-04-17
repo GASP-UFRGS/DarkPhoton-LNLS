@@ -45,6 +45,14 @@ void MyRunAction::BeginOfRunAction(const G4Run*)
     man->CreateNtupleDColumn("posTrackLength");
 
     man->FinishNtuple(3);
+
+    // tuple that get number of particles in event:
+    man->CreateNtuple("ParticlesInEvent", "ParticlesInEvent");
+    man->CreateNtupleIColumn("EventID");
+    man->CreateNtupleDColumn("NumberOfPhotons");
+    man->CreateNtupleDColumn("NumberOfPositrons");
+
+    man->FinishNtuple(4);
 }
 
 void MyRunAction::EndOfRunAction(const G4Run*)

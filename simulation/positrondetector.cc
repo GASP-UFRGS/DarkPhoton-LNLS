@@ -109,22 +109,40 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
 
 void MyPositronDetector::EndOfEvent(G4HCofThisEvent* hce)
 {
-    /*
-    // Prints based on the particles detected
-    if (photonsDetected && positronsDetected) {
-        G4cout << "Event with both photons and positrons" << G4endl;
-    } else if (photonsDetected) {
-        G4cout << "Event with only photons" << G4endl;
-    } else if (positronsDetected) {
-        G4cout << "Event with only positrons" << G4endl;
-    } else {
-        G4cout << "Event with no photons or positrons" << G4endl;
-    }
-    */
+
+    G4int eventNumber = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();
+    auto *man = G4RootAnalysisManager::Instance();
 
     // Get the number of hits in the hitsCollection
     G4int nOfHits = hitsCollection->entries();
 
+
+    G4cout << "\n\nTHE EVENT NUMBER IS: " << eventNumber << "\n\n" <<G4endl;
+    G4cout << "\n\nNUMBER OF HITS IN THIS EVENT IS: " << nOfHits << "\n\n" <<G4endl;
+
+    G4int photonsCounter = 0; // counters for the number of photons and positrons in that event
+    G4int positronsCounter = 0;
+
     // loop through the hitsCollection
-    for (G4int i = 0; i < nOfHits; i++) (*hitsCollection)[i]->Print();
+    for (G4int i = 0; i < nOfHits; i++) {
+        //(*hitsCollection)[i]->Print();
+
+        G4int hitNum = (*hitsCollection)[i]->GetNumberOfEvent();
+        G4int numberOfPhotons = (*hitsCollection)[i]->GetNumberOfPhotons();
+        G4int numberOfPositrons = (*hitsCollection)[i]->GetNumberOfPositrons();
+
+        if (hitNum == 0) {
+            photonsCounter = photonsCounter + 1; // increments the counter for each photon found in a hit
+        }
+        if (hitNum == 1) {
+            positronsCounter = positronsCounter + 1; // increments the counter for each positron found in a hit
+        }
+        //man->AddNtupleRow(4);
+    }
+    if (photonsCounter != 0) {
+        man->FillNtupleDColumn(4, 1, photonsCounter);
+    }
+    if (positronsCounter !=0 ) {
+        man->FillNtupleDColumn(4, 2, positronsCounter);
+    }
 }

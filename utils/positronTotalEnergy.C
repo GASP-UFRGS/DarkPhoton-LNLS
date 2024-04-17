@@ -1,6 +1,6 @@
 void positronTotalEnergy()
 {
-    TCanvas *c1 = new TCanvas("c2", "c2", 800, 800);
+    TCanvas *c1 = new TCanvas("c2", "c2");
 
     TFile *input = new TFile("output.root", "read");
 

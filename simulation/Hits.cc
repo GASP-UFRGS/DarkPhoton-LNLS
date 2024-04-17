@@ -10,12 +10,24 @@ Hits::~Hits()
 
 void Hits::Print() {
     G4cout
-        << "Current event is: "
+        << "Current detector is: "
         << eventID
         << "\nNumber Of Photons in this event: "
-        <<  numberOfPhotons
+        << numberOfPhotons
         << "\nNumber Of Positrons in this event: "
         << numberOfPositrons
         << "\n"
         << G4endl;
+}
+
+G4int Hits::GetNumberOfPhotons() {
+    return numberOfPhotons;
+}
+
+G4int Hits::GetNumberOfPositrons() {
+    return numberOfPositrons;
+}
+
+G4int Hits::GetNumberOfEvent() {
+    return eventID;
 }

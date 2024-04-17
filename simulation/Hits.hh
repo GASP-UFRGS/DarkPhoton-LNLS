@@ -30,9 +30,10 @@ public:
     inline void AddNumberOfPositrons() {numberOfPositrons += 1;}
     inline void AddEventID() { eventID += 1; }
     inline double GetEnergyDeposit() {return energyDeposit;}
-    inline int GetNumberOfPhotons() {return numberOfPhotons;}
-    inline int GetNumberOfPositrons() {return numberOfPositrons;}
-    inline int GetNumberOfEvent() { return eventID; }
+    G4int GetNumberOfPhotons();
+    G4int GetNumberOfPositrons();
+    G4int GetNumberOfEvent();
+
 
 private:
     int numberOfPhotons;
