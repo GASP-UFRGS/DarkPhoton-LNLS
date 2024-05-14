@@ -1,6 +1,6 @@
-#include "positrondetector.hh"
+#include "SensitiveDetector.hh"
 
-MyPositronDetector::MyPositronDetector(const G4String& name, const G4String& hitsCollectionName, MyDetectorConstruction* _det)
+MySensitiveDetector::MySensitiveDetector(const G4String& name, const G4String& hitsCollectionName, MyDetectorConstruction* _det)
 : G4VSensitiveDetector(name), hitsCollection(0), hcid(-1), det(_det) {
     collectionName.insert(hitsCollectionName);
     G4cout << "Creating Sensitive Detector named: " << name << G4endl;
@@ -9,9 +9,9 @@ MyPositronDetector::MyPositronDetector(const G4String& name, const G4String& hit
     positronsDetected = false;
 }
 
-MyPositronDetector::~MyPositronDetector() {}
+MySensitiveDetector::~MySensitiveDetector() {}
 
-void MyPositronDetector::Initialize(G4HCofThisEvent* hce) {
+void MySensitiveDetector::Initialize(G4HCofThisEvent* hce) {
     photonsDetected = false;
     positronsDetected = false;
 
@@ -27,7 +27,7 @@ void MyPositronDetector::Initialize(G4HCofThisEvent* hce) {
     eventID = -1;
 }
 
-G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist) {
+G4bool MySensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist) {
     G4double energyDep = step->GetTotalEnergyDeposit();
     const G4ParticleDefinition* particle = step->GetTrack()->GetParticleDefinition();
     G4int trackID = step->GetTrack()->GetTrackID();
@@ -107,7 +107,7 @@ G4bool MyPositronDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist)
     return true;
 }
 
-void MyPositronDetector::EndOfEvent(G4HCofThisEvent* hce)
+void MySensitiveDetector::EndOfEvent(G4HCofThisEvent* hce)
 {
 
     G4int eventNumber = G4RunManager::GetRunManager()->GetCurrentEvent()->GetEventID();

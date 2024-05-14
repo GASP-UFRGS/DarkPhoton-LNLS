@@ -25,10 +25,10 @@ class G4Step;
 class G4TouchableHistory;
 class G4HCofThisEvent;
 
-class MyPositronDetector : public G4VSensitiveDetector {
+class MySensitiveDetector : public G4VSensitiveDetector {
 public:
-    MyPositronDetector(const G4String& name, const G4String& hitsCollectionName, MyDetectorConstruction* det);
-    ~MyPositronDetector();
+    MySensitiveDetector(const G4String& name, const G4String& hitsCollectionName, MyDetectorConstruction* det);
+    ~MySensitiveDetector();
 
     // void RegisterPrimitive(G4VPrimitiveScorer* scorer);
 

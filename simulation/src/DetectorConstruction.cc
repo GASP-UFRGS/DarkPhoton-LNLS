@@ -121,6 +121,10 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     visAttributes = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0)); // Positron detector - red
     positronDetectorLV->SetVisAttributes(visAttributes);
 
+    visAttributes = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5));
+    fakeCaloDetectorLV->SetVisAttributes(visAttributes); // fake calo detector - grey
+    fakePosDetectorLV->SetVisAttributes(visAttributes); // fake positron detector - grey
+
     return physWorld;
 }
 
@@ -128,19 +132,17 @@ void MyDetectorConstruction::ConstructSDandField()
 {
     if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakeCaloDetector", 0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakeCaloDetector");
     G4SDManager* caloSDMan = G4SDManager::GetSDMpointer();
-    MyPositronDetector* caloSD = new MyPositronDetector("FakeCaloDetector", "FakeCaloDetectorCollection", this);
+    MySensitiveDetector* caloSD = new MySensitiveDetector("FakeCaloDetector", "FakeCaloDetectorCollection", this);
     caloSDMan->AddNewDetector(caloSD);
     SetSensitiveDetector(fakeCaloDetectorLV, caloSD);
     G4cout << "Sensitive Detector created" << G4endl;
 
     if (G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakePosDetector", 0)) delete G4SDManager::GetSDMpointer()->FindSensitiveDetector("FakePosDetector");
     G4SDManager* posSDMan = G4SDManager::GetSDMpointer();
-    MyPositronDetector* posSD = new MyPositronDetector("FakePosDetector", "FakePosDetectorCollection", this);
+    MySensitiveDetector* posSD = new MySensitiveDetector("FakePosDetector", "FakePosDetectorCollection", this);
     posSDMan->AddNewDetector(posSD);
     SetSensitiveDetector(fakePosDetectorLV, posSD);
     G4cout << "Sensitive Detector created" << G4endl;
-
-
 
     G4SDManager::GetSDMpointer()->SetVerboseLevel(1);
 

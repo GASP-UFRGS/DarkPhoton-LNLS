@@ -6,9 +6,6 @@
 #include "G4THitsMap.hh"
 #include "globals.hh"
 
-//namespace simulation
-//{
-
 class EventAction : public G4UserEventAction
 {
     public:
@@ -30,6 +27,5 @@ class EventAction : public G4UserEventAction
         G4int fAbsoTrackLengthHCID = -1;
         G4int fGapTrackLengthHCID = -1;
 };
-//}
 
 #endif

@@ -30,8 +30,7 @@
 #include "G4PSEnergyDeposit.hh"
 #include "G4PSTrackLength.hh"
 
-#include "calodetector.hh"
-#include "positrondetector.hh"
+#include "SensitiveDetector.hh"
 #include "MagneticField.hh"
 
 class MyDetectorConstruction : public G4VUserDetectorConstruction
@@ -53,8 +52,6 @@ private:
     G4MagneticField *magField;
     G4FieldManager *fieldMgr;
     G4LogicalVolume *magneticLogical;
-
-    //virtual void ConstructSDandField();
 };
 
 #endif
