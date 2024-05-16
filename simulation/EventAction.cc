@@ -7,6 +7,9 @@
 #include "G4HCofThisEvent.hh"
 #include "G4UnitsTable.hh"
 
+#include "G4PrimaryVertex.hh"
+#include "G4PrimaryParticle.hh"
+
 #include "Randomize.hh"
 #include <iomanip>
 
@@ -67,12 +70,19 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     auto absoTrackLength = GetSum(GetHitsCollection(fAbsoTrackLengthHCID, event));
     auto gapTrackLength = GetSum(GetHitsCollection(fGapTrackLengthHCID, event));
 
+    // Retrieve primary vertex
+    G4PrimaryVertex* primaryVertex = event->GetPrimaryVertex(0);
+
+    // Acces primary particles generated in this vertex
+    G4PrimaryParticle* primaryParticle = primaryVertex->GetPrimary();
+    G4String particleName = primaryParticle->GetParticleDefinition()->GetParticleName();
+
+
     // get analysis manager
     auto *man = G4RootAnalysisManager::Instance();
 
     auto eventID = event->GetEventID();
 
-    G4cout << "\n\n\n PRINTING EVENTID HERE: \n\n " << eventID << "\n\n PRINTING EVENTID HERE \n\n\n" << G4endl;
 
     G4cout << "The energy deposit in calodetector (EventAction) is: " << absoEdep << G4endl;
     G4cout << "The energy deposit in positrondetector (EventAction) is: " << absoEdep << G4endl;
@@ -84,6 +94,10 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     man->FillNtupleDColumn(3, 4, gapTrackLength);
 
     man->AddNtupleRow(3);
+
+    man->FillNtupleIColumn(4, 0, eventID);
+
+    man->AddNtupleRow(4);
 
     //print per event (modulo n)
     //auto eventID = event->GetEventID();

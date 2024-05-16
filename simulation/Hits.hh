@@ -19,18 +19,24 @@ public:
     Hits();
     virtual ~Hits();
 
+    void Print() override;
+
     // Operators
     inline void *operator new(size_t);
     inline void operator delete(void*);
 
     inline void AddEnergyDeposit(double e) { energyDeposit += e; }
+    inline void AddNumberOfPhotons() {numberOfPhotons += 1;}
     inline void AddNumberOfPositrons() {numberOfPositrons += 1;}
     inline void AddEventID() { eventID += 1; }
     inline double GetEnergyDeposit() {return energyDeposit;}
-    inline int GetNumberOfPositrons() {return numberOfPositrons;}
-    inline int GetNumberOfEvent() { return eventID; }
+    G4int GetNumberOfPhotons();
+    G4int GetNumberOfPositrons();
+    G4int GetNumberOfEvent();
+
 
 private:
+    int numberOfPhotons;
     int numberOfPositrons;
     double energyDeposit;
     int eventID;
