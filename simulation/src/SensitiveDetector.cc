@@ -65,6 +65,12 @@ G4bool MySensitiveDetector::ProcessHits(G4Step *step, G4TouchableHistory *ROhist
         }
     }
 
+    // This if kills the particle inside the fake calo detector to avoid reflection and counting the particle twice
+    if (photonsDetected) {
+        G4Track *track = step->GetTrack();
+        track->SetTrackStatus(fStopAndKill);
+    }
+
     hitsCollection->insert(hit);
 
     G4StepPoint *preStepPoint = step->GetPreStepPoint();
