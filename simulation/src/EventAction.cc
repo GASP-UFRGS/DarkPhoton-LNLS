@@ -77,12 +77,9 @@ void EventAction::EndOfEventAction(const G4Event* event) {
     G4PrimaryParticle* primaryParticle = primaryVertex->GetPrimary();
     G4String particleName = primaryParticle->GetParticleDefinition()->GetParticleName();
 
-
     // get analysis manager
     auto *man = G4RootAnalysisManager::Instance();
-
     auto eventID = event->GetEventID();
-
 
     G4cout << "The energy deposit in calodetector (EventAction) is: " << absoEdep << G4endl;
     G4cout << "The energy deposit in positrondetector (EventAction) is: " << absoEdep << G4endl;
